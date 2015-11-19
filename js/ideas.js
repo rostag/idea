@@ -9,28 +9,28 @@
 	Other ideas
 */
 
-var idea = {
-	aim: aim
-	date: date,
-	rating: rating
-}
+'use strict';
+
+var ideas = [];
 
 function getIdea() {
 	var idea = {
-		name: 'Idea ' + Math.random() * 100,
+		name: 'Idea ' + Math.round(Math.random() * 100),
 		dateCreated: new Date(),
 		dateUpdated: new Date(),
-		rating: Math.random() * 100,
+		rating: Math.round(Math.random() * 100),
 		link: 'http://'
-	}
+	};
 	console.log(idea);
 	return idea;
 }
 
 function generateRandomIdeas(num) {
+	var ideas = [];
 	for (var i = num - 1; i >= 0; i--) {
 		ideas.push(getIdea());
-	};
+	}
+	return ideas;
 }
 
 /* Sort
@@ -45,27 +45,27 @@ function sortIdeas(ideas) {
 
 function renderToHtml() {
 
-	var el = document.getElementByClassName('ideas-tbody');
+	var el = document.getElementsByClassName('ideas-tbody')[0];
 	
 	for (var idx=0; idx<ideas.length; idx++) {
 		var i = ideas[idx];
 		var html = ['<tr>',
-			'<td>', i.name, '</td>' +
-			'<td>', i.dateCreated, '</td>' +
-			'<td>', i.rating, '</td>' +
-			'<td>', i.dateUpdated, '</td>' +
-			'<td>', i.link, '</td>' +
+			'<td>', idx, '</td>',
+			'<td><a href=', i.link, '>', i.name, '</a></td>',
+			'<td>', i.rating, '</td>',
+			'<td>', i.dateCreated.toDateString(), '</td>',
+			'<td>', i.dateUpdated.toDateString(), '</td>',
 			'</tr>'
-		].join();
+		].join('');
 		
 		var tr = document.createElement('tr');
 
-		tr.innerHtml = html;
+		tr.innerHTML = html;
 		el.appendChild( tr );
 	}
 }
 
-var ideas = generateRandomIdeas(10);
+var ideas = generateRandomIdeas(30);
 console.log(ideas);
 
-	
+renderToHtml();
